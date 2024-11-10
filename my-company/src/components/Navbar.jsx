@@ -9,6 +9,8 @@ function Navbar() {
         backgroundColor: "navy",
         color: "white",
         textAlign: "center",
+        display: "inline-block",
+        justifyContent: "center",
       }}
     >
       <Link to="/" style={{ margin: "0 10px" }}>
