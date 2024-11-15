@@ -5,6 +5,9 @@ const useRecipeStore = create((set) => ({
   searchTerm: "", // Current search term
   filteredRecipes: [], // Array of recipes that match the search/filter criteria
 
+  addRecipe: (newRecipe) =>
+    set((state) => ({ recipes: [...state.recipes, newRecipe] })),
+
   // Set the search term and trigger filtering
   setSearchTerm: (term) =>
     set((state) => {
