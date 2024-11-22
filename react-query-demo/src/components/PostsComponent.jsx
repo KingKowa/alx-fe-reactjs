@@ -10,12 +10,13 @@ const fetchPosts = async () => {
 };
 
 const PostsComponent = () => {
-  // Use React Query's `useQuery` hook
+  // React Query's `useQuery` hook with cacheTime and keepPreviousData
   const { data, isLoading, isError, error, refetch, isFetching } = useQuery({
     queryKey: ["posts"], // Unique key for caching
     queryFn: fetchPosts,
-    staleTime: 1000 * 60 * 5, // 5 minutes cache duration
-    refetchOnWindowFocus: true, // Automatically refetch on window focus
+    cacheTime: 1000 * 60 * 10, // 10 minutes before garbage collection
+    staleTime: 1000 * 60 * 5, // 5 minutes before refetching
+    keepPreviousData: true, // Retain previous data while fetching new data
   });
 
   if (isLoading) return <div>Loading posts...</div>;
