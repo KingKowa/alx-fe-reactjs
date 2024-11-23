@@ -4,6 +4,7 @@ import About from "./pages/About";
 import Profile from "./pages/Profile/Profile";
 import ProfileDetails from "./pages/Profile/ProfileDetails";
 import ProfileSettings from "./pages/Profile/ProfileSettings";
+import BlogPost from "./pages/Blog/BlogPost";
 
 function App() {
   return (
@@ -11,10 +12,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+
         <Route path="/profile" element={<Profile />}>
           <Route path="details" element={<ProfileDetails />} />
           <Route path="settings" element={<ProfileSettings />} />
         </Route>
+        <Route path="/blog/:postId" element={<BlogPost />} />
       </Routes>
     </Router>
   );
