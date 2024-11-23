@@ -1,3 +1,10 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Profile from "./pages/Profile/Profile";
+import ProfileDetails from "./pages/Profile/ProfileDetails";
+import ProfileSettings from "./pages/Profile/ProfileSettings";
+
 import { Outlet, Link } from "react-router-dom";
 
 const Profile = () => {
