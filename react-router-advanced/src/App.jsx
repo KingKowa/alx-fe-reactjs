@@ -5,6 +5,7 @@ import Profile from "./pages/Profile/Profile";
 import ProfileDetails from "./pages/Profile/ProfileDetails";
 import ProfileSettings from "./pages/Profile/ProfileSettings";
 import BlogPost from "./pages/Blog/BlogPost";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
