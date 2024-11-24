@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import TodoList from "./TodoList";
+import TodoList from "../components/TodoList";
 
 const sampleTodos = [
   { id: 1, text: "Test Todo 1", completed: false },
