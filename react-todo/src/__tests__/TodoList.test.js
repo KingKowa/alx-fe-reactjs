@@ -1,50 +1,53 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import TodoList from "../components/TodoList";
+import TodoList from "./TodoList";
 
-describe("TodoList Component", () => {
-  test("renders initial todos", () => {
-    render(<TodoList />);
-    expect(screen.getByText("Learn React")).toBeInTheDocument();
-    expect(screen.getByText("Build a Todo App")).toBeInTheDocument();
-  });
+const sampleTodos = [
+  { id: 1, text: "Test Todo 1", completed: false },
+  { id: 2, text: "Test Todo 2", completed: true },
+];
 
-  test("adds a new todo", () => {
-    render(<TodoList />);
-    const input = screen.getByPlaceholderText("Add a new todo");
-    const addButton = screen.getByText("Add");
+test("renders a list of todos", () => {
+  render(
+    <TodoList
+      todos={sampleTodos}
+      onToggleTodo={jest.fn()}
+      onDeleteTodo={jest.fn()}
+    />
+  );
 
-    fireEvent.change(input, { target: { value: "New Todo" } });
-    fireEvent.click(addButton);
+  expect(screen.getByText("Test Todo 1")).toBeInTheDocument();
+  expect(screen.getByText("Test Todo 2")).toBeInTheDocument();
+});
 
-    expect(screen.getByText("New Todo")).toBeInTheDocument();
-  });
+test("calls onToggleTodo when a todo is clicked", () => {
+  const toggleTodoMock = jest.fn();
+  render(
+    <TodoList
+      todos={sampleTodos}
+      onToggleTodo={toggleTodoMock}
+      onDeleteTodo={jest.fn()}
+    />
+  );
 
-  test("toggles a todo's completed state", () => {
-    render(<TodoList />);
-    const todoItem = screen.getByText("Learn React");
+  const todo = screen.getByText("Test Todo 1");
+  fireEvent.click(todo);
 
-    // Check initial state
-    expect(todoItem).not.toHaveStyle("text-decoration: line-through");
+  expect(toggleTodoMock).toHaveBeenCalledWith(1);
+});
 
-    // Toggle to completed
-    fireEvent.click(todoItem);
-    expect(todoItem).toHaveStyle("text-decoration: line-through");
+test("calls onDeleteTodo when delete button is clicked", () => {
+  const deleteTodoMock = jest.fn();
+  render(
+    <TodoList
+      todos={sampleTodos}
+      onToggleTodo={jest.fn()}
+      onDeleteTodo={deleteTodoMock}
+    />
+  );
 
-    // Toggle back to not completed
-    fireEvent.click(todoItem);
-    expect(todoItem).not.toHaveStyle("text-decoration: line-through");
-  });
+  const deleteButton = screen.getAllByText("Delete")[0];
+  fireEvent.click(deleteButton);
 
-  test("deletes a todo", () => {
-    render(<TodoList />);
-    const todoItem = screen.getByText("Learn React");
-    const deleteButton = todoItem.nextSibling;
-
-    // Delete the todo
-    fireEvent.click(deleteButton);
-
-    expect(todoItem).not.toBeInTheDocument();
-  });
+  expect(deleteTodoMock).toHaveBeenCalledWith(1);
 });
