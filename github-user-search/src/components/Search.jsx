@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { fetchUserData } from "../services/githubService";
 
 const Search = () => {
+  const message = "Looks like we cant find the user";
   const [username, setUsername] = useState(""); // State for the search input
   const [userData, setUserData] = useState(null); // State to hold user data
   const [loading, setLoading] = useState(false); // State for loading status
