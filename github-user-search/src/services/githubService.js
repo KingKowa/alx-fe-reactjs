@@ -12,3 +12,20 @@ const fetchUserData = async (username) => {
 };
 
 export { fetchUserData };
+
+const fetchAdvancedUsers = async ({ username, location, minRepos }) => {
+  const queryParts = [];
+  if (username) queryParts.push(`user:${username}`);
+  if (location) queryParts.push(`location:${location}`);
+  if (minRepos) queryParts.push(`repos:>${minRepos}`);
+
+  const query = queryParts.join(" ");
+  try {
+    const response = await axios.get(`${BASE_URL}/search/users?q=${query}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Error fetching user data.");
+  }
+};
+
+export { fetchAdvancedUsers };
