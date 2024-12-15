@@ -10,12 +10,17 @@ const Search = ({ onSearch }) => {
   const [error, setError] = useState(null); // State for error handling
   const [location, setLocation] = useState("");
   const [minRepos, setMinRepos] = useState("");
+  const [criteria, setCriteria] = useState({});
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Function to handle API call and state updates
   const handleSearch = async () => {
     setLoading(true);
     setError(null);
     setUserData(null);
+    setResults([]);
 
     try {
       const data = await fetchUserData(username); // Call the API
@@ -42,6 +47,39 @@ const Search = ({ onSearch }) => {
 
   return (
     <div className="max-w-xl mx-auto p-4">
+      <div className="max-w-xl mx-auto p-4">
+        <SearchForm onSearch={handleSearch} />
+        {loading && <p>Loading...</p>}
+        {error && <p className="text-red-500">{error}</p>}
+        <div className="mt-4 space-y-4">
+          {results.map((user) => (
+            <div
+              key={user.id}
+              className="bg-gray-100 p-4 rounded-lg shadow-md flex items-center space-x-4"
+            >
+              <img
+                src={user.avatar_url}
+                alt={`${user.login}'s avatar`}
+                className="w-16 h-16 rounded-full"
+              />
+              <div>
+                <h2 className="text-lg font-bold">{user.login}</h2>
+                <p>
+                  <a
+                    href={user.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 underline"
+                  >
+                    View Profile
+                  </a>
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg p-6 space-y-4"
@@ -97,3 +135,38 @@ const Search = ({ onSearch }) => {
 };
 
 export default Search;
+
+return (
+  <div className="max-w-xl mx-auto p-4">
+    <SearchForm onSearch={handleSearch} />
+    {loading && <p>Loading...</p>}
+    {error && <p className="text-red-500">{error}</p>}
+    <div className="mt-4 space-y-4">
+      {results.map((user) => (
+        <div
+          key={user.id}
+          className="bg-gray-100 p-4 rounded-lg shadow-md flex items-center space-x-4"
+        >
+          <img
+            src={user.avatar_url}
+            alt={`${user.login}'s avatar`}
+            className="w-16 h-16 rounded-full"
+          />
+          <div>
+            <h2 className="text-lg font-bold">{user.login}</h2>
+            <p>
+              <a
+                href={user.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 underline"
+              >
+                View Profile
+              </a>
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
